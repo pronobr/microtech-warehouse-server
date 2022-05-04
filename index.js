@@ -27,13 +27,26 @@ app.delete("/delete/:id", async(req,res) =>{
     const result = await productCollection.deleteOne(query)
     res.send(result)
 })
-app.get("/myitem/:email", async(req,res) =>{
-    const mainEmail =req.params
-   console.log(mainEmail)
-//    const query ={mainEmail}
-   const cursor =productCollection.find(mainEmail)
- const products = await cursor.toArray()
- res.send(products)
+app.get("/myitem", async(req,res) =>{
+    const mainEmail =req.query;
+// console.log()
+const itemAuth =req.headers.authorization
+const [a,accessToken] =itemAuth.split(" ")
+
+const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRECT)
+if(mainEmail.email==decoded.email){
+    const cursor =productCollection.find(mainEmail)
+    const products = await cursor.toArray()
+    res.send(products)
+}else{
+    return res.status(401).send({ message: 'unauthorized access' });
+}
+
+console.log(decoded.email,mainEmail.email)
+    // const query ={email:mainEmail}
+//    console.log(query)
+// // //    const query ={mainEmail}
+
 //    console.log(products)
 })
 app.post("/products",async(req,res) =>{
