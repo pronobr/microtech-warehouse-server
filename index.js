@@ -142,7 +142,7 @@ catch(error){
 
 }
 run().catch(console.dir)
-console.log(uri)
+
 
 
 
