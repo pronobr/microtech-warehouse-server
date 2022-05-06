@@ -84,7 +84,7 @@ app.put('/productincress/:id',async(req,res) =>{
         
     const updatedoc ={
             $set: {
-                quantity:data.updateQuantity
+                quantity:newQuantity
             }
         }
         const result =await productCollection.updateOne(query,updatedoc,options)
@@ -101,7 +101,7 @@ app.put('/product/:id',async(req,res) =>{
         
     const updatedoc ={
             $set: {
-                quantity:data.updateQuantity
+                quantity:newQuantity
             }
         }
         const result =await productCollection.updateOne(query,updatedoc,options)
